@@ -9,6 +9,7 @@
 		var _this    = this;
 		var items    = undefined;
 		var tmpProx  = undefined;
+		var itemsPag = [];
 		var atual    = 0;
 		var animando = false;
 
@@ -50,26 +51,15 @@
 		// [FIM]
 
 
-		// [INI] Pega a direção da troca
-		function getDir(numProx) {
-			return numProx === 0 && atual === items.length-1 ? -1 : (function() {
-				return numProx === items.length-1 && atual === 0 ? 1 : (function() {
-					return numProx > atual ? -1 : 1;
-				})();
-			})(); 
-		}
-		// [FIM]
-
-
 		// [INI] Método para criar paginacao
 		function criaPaginacao() {
 			Array.prototype.forEach.call(items, function(elem, index) {
-				externalPack.criaElemento({
+				itemsPag.push(externalPack.criaElemento({
 					elem: 'li',
-					classe: 'paginacao',
+					classe: index === 0 ? 'ativo' : '',
 					texto: index,
 					parentNode: _this.get('paginacao'),
-				});
+				}));
 			});
 			// [INI] Gera evento de clique na paginacao
 			this.get('paginacao').addEventListener('click', function(evento) {
@@ -97,7 +87,7 @@
 		function initTroca(numProx, callback) {
 			var efeito = getEfeitoTroca();
 			if(efeito !== false) {
-				var elementos = {atual: items[atual], prox: items[numProx]};
+				var elementos = {atual: items[atual], prox: items[numProx], dir: atual < numProx ? 'prox' : 'ant'};
 				efeito(elementos, function() {
 					atual    = numProx;
 					animando = false;
@@ -129,7 +119,8 @@
 				var dir = atual < numProx ? 1 : -1;
 				var prox = getNext(dir);
 				initTroca(prox, function() {
-					return trocaPag(prox);
+					$(itemsPag[atual]).addClass('ativo').siblings().removeClass('ativo');
+					return trocaPag(numProx);
 				});
 			} 
 		}
