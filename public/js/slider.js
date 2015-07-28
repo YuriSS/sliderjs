@@ -2,6 +2,8 @@
 
 	"use strict";
 
+	var externalPack = window.pack;
+
 	var Slider = function(propriedades) {
 
 		var _this    = this;
@@ -62,7 +64,7 @@
 		// [INI] Método para criar paginacao
 		function criaPaginacao() {
 			Array.prototype.forEach.call(items, function(elem, index) {
-				pack.criaElemento({
+				externalPack.criaElemento({
 					elem: 'li',
 					classe: 'paginacao',
 					texto: index,
@@ -72,9 +74,8 @@
 			// [INI] Gera evento de clique na paginacao
 			this.get('paginacao').addEventListener('click', function(evento) {
 				var num = parseInt(evento.target.innerHTML);
-				var next = getNext(atual > num ? -1 : 1);
 				tmpProx = num;
-				trocaPag(next);
+				trocaPag(num);
 			}, false);
 			// [FIM]
 		}
@@ -86,9 +87,7 @@
 			this.get('setas').addEventListener('click', function(evento) {
 				var dirAttr = evento.target.getAttribute('data-dir');
 				var next = getNext(dir[dirAttr]);
-				initTroca(next, function() {
-					animando = false;
-				});
+				initTroca(next);
 			}, false);
 		}
 		// [FIM]
@@ -96,36 +95,43 @@
 
 		// [INI] Métodos para a troca de elementos
 		function initTroca(numProx, callback) {
-			if(!animando) {
-				var largura = items[atual].offsetWidth + 50;
-				animando = true;
-				$(items[numProx]).addClass('proxativo');
-				$(items[atual]).animate({left: largura * getDir(numProx)}, function() {
-					configuraTroca(numProx, callback);
+			var efeito = getEfeitoTroca();
+			if(efeito !== false) {
+				var elementos = {atual: items[atual], prox: items[numProx]};
+				efeito(elementos, function() {
+					atual    = numProx;
+					animando = false;
+					if(callback) {callback();}
 				});
 			}
 		}
-		function configuraTroca(numProx, callback) {
-			$(items[numProx]).addClass('ativo').removeClass('proxativo');
-			$(items[atual]).removeClass('ativo');
-			items[atual].style.left = 0;
-			atual = numProx;
-			if(callback) {
-				callback();
+		function getEfeitoTroca() {
+			if(!animando) {
+				var efeito = _this.get('efeito');
+				animando = true;
+				if(efeito) {
+					if(typeof efeito === "string") {
+						return externalPack.Efeitos[efeito] ? externalPack.Efeitos[efeito] : externalPack.Efeitos['padrao'];
+					} else {
+						return efeito;
+					}
+				}
+				return externalPack.Efeitos['padrao'];
 			}
+			return false;
 		}
 		// [FIM]
 
 
 		// [INI] Métodos para troca por paginação
 		function trocaPag(numProx) {
-			if(numProx !== tmpProx) {
-				initTroca(numProx, function() {
-					var next = getNext(atual > tmpProx ? -1 : 1);
-					return trocaPag(numProx);
+			if(atual !== tmpProx) {
+				var dir = atual < numProx ? 1 : -1;
+				var prox = getNext(dir);
+				initTroca(prox, function() {
+					return trocaPag(prox);
 				});
-			}
-			return animando = false; 
+			} 
 		}
 		// [FIM]
 	};
