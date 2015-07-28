@@ -1,0 +1,25 @@
+{
+  "name": "slider",
+  "version": "0.0.1",
+  "authors": [
+    "YuriSS <yuri.s.dos.santos@gmail.com>"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "directory": "public/components/",
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "public/components",
+    "test",
+    "tests",
+    "app.js",
+    "bower.json",
+    ".bowerrc",
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

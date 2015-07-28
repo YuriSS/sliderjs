@@ -1,0 +1,51 @@
+
+@color-default: #EEE;
+
+
+@box-sizing-default: 960px;
+
+
+
+body {
+	background: @color-default;
+}
+
+
+ul, ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+.container {
+	width: @box-sizing-default;
+	margin: auto;
+
+
+	ul#slider {
+		position: relative;
+		width: 100%;
+		height: 300px;
+		overflow: hidden;
+
+		li {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 10;
+
+			img {
+				width: 100%;
+				height: 300px;
+			}
+		}
+
+		.ativo {
+			z-index: 100;
+		}
+		.proxativo {
+			z-index: 50;
+		}
+	}
+}

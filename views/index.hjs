@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>{{titulo}}</title>
+	<link rel="stylesheet" href="css/master.css">
+</head>
+<body>
+	<header class="container">
+		<h1>{{titulo}}</h1>
+	</header>
+
+	<section class="container">
+		<ul id="slider">
+			<li class="ativo"><img src="http://lorempixel.com/output/city-q-c-987-702-5.jpg" alt=""></li>
+			<li><img src="http://lorempixel.com/output/city-q-c-987-702-3.jpg" alt=""></li>
+			<li><img src="http://lorempixel.com/output/city-q-c-987-702-7.jpg" alt=""></li>
+		</ul>
+		<div id="setas">
+			<span data-dir="ant">Ant</span>
+			<span data-dir="prox">Prox</span>
+		</div>
+		<ul id="slider_pagination">
+		</ul>
+	</section>
+
+
+	<script src="components/jquery/dist/jquery.js"></script>
+	<script src="js/pack.js"></script>
+	<script src="js/classe.js"></script>
+	<script src="js/slider.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

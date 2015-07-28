@@ -1,0 +1,16 @@
+{
+  "name": "slider",
+  "version": "0.0.1",
+  "description": "Slider to show",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuri Santos",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.1",
+    "hjs": "0.0.6",
+    "less-middleware": "^2.0.1"
+  }
+}
